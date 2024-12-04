@@ -4,14 +4,15 @@ body {
     background: url('images/road-2650211_1280.jpg') center/cover no-repeat;
     color: #fff;
     text-align: center;
-    height: 100vh;
+    height: 90vh;
     display: flex;
     flex-direction: column;
     justify-content: start;
     align-items: center;
+    overflow: hidden;
     
   }
-
+  
   .quote {
     margin-top: 70px;
     display: flex;
@@ -54,4 +55,102 @@ body {
   .icon {
     width: 70px;
    
+  }
+/* General container styling */
+.quiz-container {
+    width: 50%;
+    height: 50%;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(0, 0, 0, 0.6); /* Semi-transparent black */
+    color: white;
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); /* 3D effect */
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  
+  /* Header styling */
+  .quiz-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+  }
+  
+  .question-count {
+    font-weight: bold;
+  }
+  .timer {
+    background-color: #e1f5fe;
+    width: 6.5em;
+    border-radius: 1.8em;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.5em 1.2em;
+    color: #ee1010; /* Red color for the timer */
+  }
+  
+  
+  /* Content styling */
+  .quiz-content {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+  }
+  
+  .question {
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+  }
+  
+  .options {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Two options per row */
+    gap: 10px;
+    width: 100%;
+  }
+  
+  .option {
+    background-color: #007bff; /* Blue background */
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .option:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+  }
+  
+  /* Footer styling */
+  .quiz-footer {
+    text-align: center;
+  }
+  
+  .next-btn {
+    background-color: #28a745; /* Green background */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .next-btn:hover {
+    background-color: #1e7e34; /* Darker green on hover */
   }
