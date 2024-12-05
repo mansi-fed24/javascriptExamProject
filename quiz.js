@@ -90,15 +90,40 @@ const questions = [
       correct: "120 km/h"
     }
   ];
-
-
-let currentQuestionIndex = 0; // Start with the first question
+  // Select the elements
+const quoteElement = document.querySelector('.quote');
+const startButton = document.querySelector('.start-button');
+const quizContainer = document.querySelector('.quiz-container');
 const questionElement = document.querySelector('.question');
 const optionsElement = document.querySelector('.options');
+const questionCountElement = document.querySelector('.question-count');
+const timerElement = document.querySelector('.time-left');
+const nextButton = document.querySelector('.next-btn');
 
-function displayQuestion(index) {
+let currentQuestionIndex = 0; // Start with the first question
+let timerInterval; // For controlling the timer.
+
+//hide quiz container initially
+quizContainer.style.display = "none";
+
+// Add an event listener to the "Rev the Engine!" button
+startButton.addEventListener('click', () => {
+  // Hide the quote and start button
+  quoteElement.style.display = 'none';
+  startButton.style.display = 'none';
+
+  // Show the quiz container
+  quizContainer.style.display = 'flex';
+
+  // start quiz - Display the first question when the page loads
+  displayQuestion(currentQuestionIndex);
+  startTimer(20);
+});
+
+  // function to display the question
+   function displayQuestion(index) {
+   
     const question = questions[index];
-    console.log(question);
     questionElement.textContent = question.text; // Set question text
 
     // Clear existing options
@@ -112,8 +137,36 @@ function displayQuestion(index) {
         button.addEventListener('click', () => checkAnswer(option, question.correct));
         optionsElement.appendChild(button);
     });
+    updateQuestionCount(); //update the question counter.
+  }
+  
+// Function to update the question count
+function updateQuestionCount() {
+  questionCountElement.textContent = `${currentQuestionIndex + 1} of ${questions.length} Questions`;
 }
 
+// Timer function
+function startTimer(duration) {
+  let timeLeft = duration;
+  timerElement.textContent = `${timeLeft}s`;
+
+  timerInterval = setInterval(() => {
+    timeLeft--;
+    timerElement.textContent = `${timeLeft}s`;
+
+    if (timeLeft <= 0) {
+      clearInterval(timerInterval); // Stop the timer.
+      moveToNextQuestion(); // Automatically move to the next question.
+    }
+  }, 1000);
+}
+
+// Function to stop the timer (useful when moving to the next question manually)
+function stopTimer() {
+  clearInterval(timerInterval);
+}
+
+// function to check the answer
 function checkAnswer(selectedOption, correctAnswer) {
   // check if the selected answer is correct
     if (Array.isArray(correctAnswer)) {
@@ -121,17 +174,29 @@ function checkAnswer(selectedOption, correctAnswer) {
     } else {
         alert(selectedOption === correctAnswer ? "yes Correct!" : "Incorrect!");
     }
+  }
 
-    // move to the next question
-    currentQuestionIndex++;
-    if(currentQuestionIndex < questions.length){
+    // function to move to the next question
+    function moveToNextQuestion(){
+      stopTimer(); // stop the timer for the current question
+
+      if(currentQuestionIndex < questions.length - 1){
+      currentQuestionIndex++; // move to the next question
+    
       displayQuestion(currentQuestionIndex); // show the next question
+      startTimer(20); // restart the timer for the new question
     } else {
       alert("Quiz completed well done!");
       questionElement.textContent="Congratulations! You have finished the quiz.";
       optionsElement.innerHTML=" "; // clear options
+      nextButton.style.display="none"; // hide the next button
+      timerElement.textContent=""; // clear the timer
     }
-}
+  }
 
-// Display the first question when the page loads
-displayQuestion(currentQuestionIndex);
+
+//Event listener for the NEXT button
+nextButton.addEventListener("click", () => {
+  moveToNextQuestion();
+});
+

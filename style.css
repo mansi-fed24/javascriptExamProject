@@ -58,6 +58,7 @@ body {
   }
 /* General container styling */
 .quiz-container {
+  
     width: 50%;
     height: 50%;
     position: fixed;
@@ -72,6 +73,7 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    
   }
   
   /* Header styling */
