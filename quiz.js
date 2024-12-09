@@ -13,13 +13,13 @@ const questions = [
     },
     {
       text: "Now we are warming up! Before starting your car, you should always check your mirrors and adjust your seat.",
-      type: "trueFalse",
+      type: "button",
       options: ["True", "False"],
       correct: "True"
     },
     {
       text: "And how about this one: You must always stop for a pedestrian waiting at a zebra crossing, even if the light is green for vehicles.",
-      type: "trueFalse",
+      type: "button",
       options: ["True", "False"],
       correct: "False"
     },
@@ -99,9 +99,14 @@ const optionsElement = document.querySelector('.options');
 const questionCountElement = document.querySelector('.question-count');
 const timerElement = document.querySelector('.time-left');
 const nextButton = document.querySelector('.next-btn');
+const submitButton = document.querySelector('.submit-btn');
 
 let currentQuestionIndex = 0; // Start with the first question
 let timerInterval; // For controlling the timer.
+let score = 0;
+
+//hide submit button initially
+submitButton.style.display = "none";
 
 //hide quiz container initially
 quizContainer.style.display = "none";
@@ -129,14 +134,93 @@ startButton.addEventListener('click', () => {
     // Clear existing options
     optionsElement.innerHTML = '';
 
-    // Add options dynamically
+    // Add options dynamically based on the type 
+    if(question.type === "button"){
     question.options.forEach((option) => {
-        const button = document.createElement('button');
+        const button = document.createElement("button");
         button.textContent = option;
         button.classList.add('option');
-        button.addEventListener('click', () => checkAnswer(option, question.correct));
+
+        button.addEventListener('click', () => {
+        // step1 remove "selected" class from all the buttons
+        const allButtons = optionsElement.querySelectorAll(".option");
+        allButtons.forEach(btn => btn.classList.remove("selected"));
+        // step2 add "selected" class to the clicked button
+        button.classList.add("selected");
+        // step3 check the answer
+        checkAnswer(option, question.correct);
+      });
         optionsElement.appendChild(button);
     });
+  }else if(question.type === "radio"){
+    question.options.forEach((option, index) => {
+      const div = document.createElement("div");
+      div.classList.add("option-container");
+
+      const input = document.createElement("input");
+      input.type = "radio";
+      input.name = `question`;
+      input.value = option;
+      input.id = `option-${index}`;
+
+      const label = document.createElement("label");
+      label.htmlFor = `option-${index}`;
+      label.textContent = option;
+
+      input.addEventListener("click", () => {
+      // Remove 'selected' class from all option containers
+      const allOptions = optionsElement.querySelectorAll('.option-container');
+      allOptions.forEach((container) => container.classList.remove('selected'));
+
+      // Add 'selected' class to the parent container of the selected radio
+      div.classList.add('selected');
+
+      // Check the answer
+      checkAnswer(option, question.correct)
+    });
+
+      div.appendChild(input);
+      div.appendChild(label);
+      optionsElement.appendChild(div);
+
+    });
+  } else if (question.type === "checkbox"){
+    question.options.forEach((option, index) => {
+      const div = document.createElement("div");
+      div.classList.add("option-container");
+
+      const input = document.createElement("input");
+      input.type ="checkbox";
+      input.value = option;
+      input.id = `option-${index}`;
+
+      const label = document.createElement("label");
+      label.htmlFor =`option-${index}`;
+      label.textContent = option;
+
+      input.addEventListener("change", () =>{
+        if (input.checked) {
+          // Add 'selected' class if checkbox is checked
+          div.classList.add("selected");
+      } else {
+          // Remove 'selected' class if checkbox is unchecked
+          div.classList.remove("selected");
+      }
+
+          // collect selected options for checkboxes
+        const selectedOptions = Array.from(
+          optionsElement.querySelectorAll("input[type='checkbox']:checked"))
+          .map((checkbox) => checkbox.value);
+          checkAnswer(selectedOptions, question.correct);
+          
+        
+      });
+        div.appendChild(input);
+         div.appendChild(label);
+         optionsElement.appendChild(div);
+    });
+  }
+
     updateQuestionCount(); //update the question counter.
   }
   
@@ -166,37 +250,72 @@ function stopTimer() {
   clearInterval(timerInterval);
 }
 
-// function to check the answer
 function checkAnswer(selectedOption, correctAnswer) {
-  // check if the selected answer is correct
-    if (Array.isArray(correctAnswer)) {
-        alert(correctAnswer.includes(selectedOption) ? "Correct!" : "Incorrect!");
-    } else {
-        alert(selectedOption === correctAnswer ? "yes Correct!" : "Incorrect!");
-    }
+  // Determine if the selected answer is correct
+  console.log("selected option:", selectedOption);
+  console.log("correct answer:", correctAnswer);
+  let isCorrect;
+  if (Array.isArray(correctAnswer)) {
+    isCorrect = correctAnswer.includes(selectedOption); // true or false
+  } else {
+    isCorrect = selectedOption === correctAnswer; // true or false
   }
+
+  // Increment score and provide feedback
+  if (isCorrect) {
+    score++; // Increment the score for correct answers
+   
+  } 
+}
+
 
     // function to move to the next question
     function moveToNextQuestion(){
       stopTimer(); // stop the timer for the current question
 
-      if(currentQuestionIndex < questions.length - 1){
+      if(currentQuestionIndex < questions.length - 2){
       currentQuestionIndex++; // move to the next question
     
       displayQuestion(currentQuestionIndex); // show the next question
       startTimer(20); // restart the timer for the new question
-    } else {
-      alert("Quiz completed well done!");
-      questionElement.textContent="Congratulations! You have finished the quiz.";
-      optionsElement.innerHTML=" "; // clear options
-      nextButton.style.display="none"; // hide the next button
-      timerElement.textContent=""; // clear the timer
+    } else if (currentQuestionIndex === questions.length - 2) {
+      // for the secondlast question
+      currentQuestionIndex++; // move to the last question
+      displayQuestion(currentQuestionIndex); // show the last question
+      startTimer(20); // restart the timer for the last question
+      
+      nextButton.style.display = "none";// hide the next button
+      submitButton.style.display = "inline-block"; // show the submit button
+      
+     // questionElement.textContent="Congratulations! You have finished the quiz.";
+      // optionsElement.innerHTML=" "; // clear options
+      
+      // timerElement.textContent=""; // clear the timer
     }
   }
-
-
-//Event listener for the NEXT button
+  //Event listener for the NEXT button
 nextButton.addEventListener("click", () => {
   moveToNextQuestion();
 });
+  
+  //Event listerner for the SUBMIT button
+  submitButton.addEventListener("click", () => {
+    stopTimer(); // stop the timer
+    showQuizSummary(); //show the quiz summary
+  });
+
+  // function will calculate the users score and display completion msg
+  function showQuizSummary(){
+    // calculate the total score (all calculations done in checkAnswer function)
+    quizContainer.innerHTML = `
+    <div class ="quiz-summary">
+      <h2> Quiz Completed! </h2>
+      <p> Your Score: ${score} out of ${questions.length}</p>
+      </div>
+      `;
+  }
+
+
+
+
 

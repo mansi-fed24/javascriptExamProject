@@ -134,9 +134,36 @@ body {
   }
   
   .option:hover {
-    background-color: #0056b3; /* Darker blue on hover */
+    background-color: #074794; /* Darker blue on hover */
   }
   
+  .option.selected {
+    background-color: #c2eb0a;
+    color: #ee0f0f;
+    font-size: 1.2rem;
+    padding:12px ;
+    transition: background-color 0.3s;
+  }
+  .option-container {
+    display: flex;
+    align-items: center;
+    background-color: #007bff; /* Blue background */
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 1rem;
+    
+    margin-bottom: 10px;
+    transition: background-color 0.3s, border-color 0.3s;
+  }
+  .option-container.selected{
+    background-color: #c2eb0a;
+    color: #ee0f0f;
+    font-size: 1.2rem;
+    padding:12px ;
+    transition: background-color 0.3s;
+  }
   /* Footer styling */
   .quiz-footer {
     text-align: center;
