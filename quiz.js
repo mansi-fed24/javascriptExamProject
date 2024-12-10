@@ -1,74 +1,13 @@
 const questions = [
-    {
-      text: "Let's start with an easy one! Which document is mandatory to carry while driving?",
-      type: "button",
+    
+  {
+      question: " Which document is mandatory to carry while driving?",
+      type: "radio",
       options: ["Driving License", "Passport"],
-      correct: "Driving License"
-    },
-    {
-      text: "I am feeling generous, so here's another simple question: What should you do if you hear a siren from an emergency vehicle?",
-      type: "button",
-      options: ["Pull over and stop.", "Keep driving and maintain your speed."],
-      correct: "Pull over and stop."
-    },
-    {
-      text: "Now we are warming up! Before starting your car, you should always check your mirrors and adjust your seat.",
-      type: "button",
-      options: ["True", "False"],
-      correct: "True"
-    },
-    {
-      text: "And how about this one: You must always stop for a pedestrian waiting at a zebra crossing, even if the light is green for vehicles.",
-      type: "button",
-      options: ["True", "False"],
-      correct: "False"
-    },
-    {
-      text: "OK. No more easy questions! What should you do if a cow is blocking the road?",
-      type: "radio",
-      options: [
-        "Politely ask it to move",
-        "Honk loudly",
-        "Wait patiently",
-        "Take a selfie for Instagram"
-      ],
-      correct: "Wait patiently"
-    },
-    {
-      text: "When is it OK to drive in the wrong lane?",
-      type: "radio",
-      options: [
-        "When no one’s looking",
-        "During a car chase in an action movie",
-        "Never",
-        "When your GPS says, 'Recalculating...'"
-      ],
-      correct: "Never"
-    },
-    {
-      text: "What should you do when you see a yellow traffic light?",
-      type: "radio",
-      options: [
-        "Stop immediately.",
-        "Speed up before it turns red.",
-        "Slow down and prepare to stop.",
-        "Ignore it."
-      ],
-      correct: "Slow down and prepare to stop."
-    },
-    {
-      text: "Which of these are mandatory car safety checks before driving? (Pick all that apply)",
-      type: "checkbox",
-      options: [
-        "Tire pressure",
-        "Functioning headlights",
-        "Emergency brakes",
-        "Car color"
-      ],
-      correct: ["Tire pressure", "Functioning headlights", "Emergency brakes"]
-    },
-    {
-      text: "What should you never do while driving? (Pick all that apply)",
+      correctAnswers: ["Driving License"]
+  },
+  {
+      question: "What should you never do while driving? (Pick all that apply)",
       type: "checkbox",
       options: [
         "Text your bestie",
@@ -76,34 +15,99 @@ const questions = [
         "Sing loudly with the windows down",
         "Drive with your eyes closed"
       ],
-      correct: ["Text your bestie", "Eat spaghetti", "Drive with your eyes closed"]
-    },
-    {
-      text: "And finally: Think you know your speed limits? Give this one a shot! What is the maximum speed limit on highways in Sweden(unless otherwise posted)?",
-      type: "radio",      
+      correctAnswers: ["Text your bestie", "Eat spaghetti", "Drive with your eyes closed"]
+  },
+  {
+      question: "What should you do if you hear a siren from an emergency vehicle?",
+      type: "radio",
+      options: ["Pull over and stop.", "Keep driving and maintain your speed."],
+      correctAnswers: ["Pull over and stop."]
+  },
+  {
+      question: "Before starting your car, you should always check your mirrors and adjust your seat.",
+      type: "radio",
+      options: ["True", "False"],
+      correctAnswers: ["True"]
+  },
+  {
+      question: "When is it OK to drive in the wrong lane?",
+      type: "radio",
+      options: [
+        "When no one’s looking",
+        "During a car chase in an action movie",
+        "Never",
+        "When your GPS says, 'Recalculating...'"
+      ],
+      correctAnswers: ["Never"]
+  },
+  {
+      question: "You must always stop for a pedestrian waiting at a zebra crossing, even if the light is green for vehicles.",
+      type: "radio",
+      options: ["True", "False"],
+      correctAnswers: ["False"]
+  },
+  {
+      question: "What should you do if a cow is blocking the road?",
+      type: "radio",
+      options: [
+        "Politely ask it to move",
+        "Honk loudly",
+        "Wait patiently",
+        "Take a selfie for Instagram"
+      ],
+      correctAnswers: ["Wait patiently"]
+  },
+  {
+      question: "What should you do when you see a yellow traffic light?",
+      type: "radio",
+      options: [
+        "Stop immediately.",
+        "Speed up before it turns red.",
+        "Slow down and prepare to stop.",
+        "Ignore it."
+      ],
+      correctAnswers: ["Slow down and prepare to stop."]
+  },
+  {
+      question: "Which of these are mandatory car safety checks before driving? (Pick all that apply)",
+      type: "checkbox",
+      options: [
+        "Tire pressure",
+        "Functioning headlights",
+        "Emergency brakes",
+        "Car color"
+      ],
+      correctAnswers: ["Tire pressure", "Functioning headlights", "Emergency brakes"]
+  },
+  
+  {
+      question: "And finally: Think you know your speed limits? Give this one a shot! What is the maximum speed limit on highways in Sweden(unless otherwise posted)?",
+      type: "radio",
       options: [
         "80 km/h",
         "100 km/h",
         "110 km/h",
         "120 km/h"
       ],
-      correct: "120 km/h"
-    }
-  ];
-  // Select the elements
+      correctAnswers: ["120 km/h"]
+  }
+  
+];
+
+// Select the elements
 const quoteElement = document.querySelector('.quote');
 const startButton = document.querySelector('.start-button');
-const quizContainer = document.querySelector('.quiz-container');
-const questionElement = document.querySelector('.question');
-const optionsElement = document.querySelector('.options');
+const quizContainer = document.querySelector('#quiz-container');
+const questionContainer = document.querySelector('.question');
+const optionsContainer = document.querySelector('.options');
 const questionCountElement = document.querySelector('.question-count');
-const timerElement = document.querySelector('.time-left');
-const nextButton = document.querySelector('.next-btn');
-const submitButton = document.querySelector('.submit-btn');
 
-let currentQuestionIndex = 0; // Start with the first question
-let timerInterval; // For controlling the timer.
-let score = 0;
+const nextButton = document.querySelector('#next-btn');
+const submitButton = document.querySelector('#submit-btn');
+
+
+let currentQuestionIndex = 0;
+const userAnswers = Array(questions.length).fill(null);
 
 //hide submit button initially
 submitButton.style.display = "none";
@@ -113,207 +117,196 @@ quizContainer.style.display = "none";
 
 // Add an event listener to the "Rev the Engine!" button
 startButton.addEventListener('click', () => {
-  // Hide the quote and start button
-  quoteElement.style.display = 'none';
-  startButton.style.display = 'none';
+// Hide the quote and start button
+quoteElement.style.display = 'none';
+startButton.style.display = 'none';
 
-  // Show the quiz container
-  quizContainer.style.display = 'flex';
+// Show the quiz container
+quizContainer.style.display = 'flex';
 
-  // start quiz - Display the first question when the page loads
-  displayQuestion(currentQuestionIndex);
-  startTimer(20);
+// start quiz - Display the first question when the page loads
+displayQuestion(currentQuestionIndex);
+
 });
 
-  // function to display the question
-   function displayQuestion(index) {
-   
-    const question = questions[index];
-    questionElement.textContent = question.text; // Set question text
+function displayQuestion(index) {
+  //const questionContainer = document.getElementById("question-container");
+  const question = questions[index];
+  questionContainer.textContent = question.question; // Set question text
 
-    // Clear existing options
-    optionsElement.innerHTML = '';
-
-    // Add options dynamically based on the type 
-    if(question.type === "button"){
-    question.options.forEach((option) => {
-        const button = document.createElement("button");
-        button.textContent = option;
-        button.classList.add('option');
-
-        button.addEventListener('click', () => {
-        // step1 remove "selected" class from all the buttons
-        const allButtons = optionsElement.querySelectorAll(".option");
-        allButtons.forEach(btn => btn.classList.remove("selected"));
-        // step2 add "selected" class to the clicked button
-        button.classList.add("selected");
-        // step3 check the answer
-        checkAnswer(option, question.correct);
-      });
-        optionsElement.appendChild(button);
-    });
-  }else if(question.type === "radio"){
-    question.options.forEach((option, index) => {
-      const div = document.createElement("div");
-      div.classList.add("option-container");
-
-      const input = document.createElement("input");
-      input.type = "radio";
-      input.name = `question`;
-      input.value = option;
-      input.id = `option-${index}`;
-
-      const label = document.createElement("label");
-      label.htmlFor = `option-${index}`;
-      label.textContent = option;
-
-      input.addEventListener("click", () => {
-      // Remove 'selected' class from all option containers
-      const allOptions = optionsElement.querySelectorAll('.option-container');
-      allOptions.forEach((container) => container.classList.remove('selected'));
-
-      // Add 'selected' class to the parent container of the selected radio
-      div.classList.add('selected');
-
-      // Check the answer
-      checkAnswer(option, question.correct)
-    });
-
-      div.appendChild(input);
-      div.appendChild(label);
-      optionsElement.appendChild(div);
-
-    });
-  } else if (question.type === "checkbox"){
-    question.options.forEach((option, index) => {
-      const div = document.createElement("div");
-      div.classList.add("option-container");
-
-      const input = document.createElement("input");
-      input.type ="checkbox";
-      input.value = option;
-      input.id = `option-${index}`;
-
-      const label = document.createElement("label");
-      label.htmlFor =`option-${index}`;
-      label.textContent = option;
-
-      input.addEventListener("change", () =>{
-        if (input.checked) {
-          // Add 'selected' class if checkbox is checked
-          div.classList.add("selected");
-      } else {
-          // Remove 'selected' class if checkbox is unchecked
-          div.classList.remove("selected");
-      }
-
-          // collect selected options for checkboxes
-        const selectedOptions = Array.from(
-          optionsElement.querySelectorAll("input[type='checkbox']:checked"))
-          .map((checkbox) => checkbox.value);
-          checkAnswer(selectedOptions, question.correct);
-          
-        
-      });
-        div.appendChild(input);
-         div.appendChild(label);
-         optionsElement.appendChild(div);
-    });
-  }
-
-    updateQuestionCount(); //update the question counter.
-  }
+  // Clear existing options
+  optionsContainer.innerHTML = '';
   
+ 
+
+ //const optionsContainer = document.querySelector('.options');
+ question.options.forEach((option, i) => {
+  const div = document.createElement("div");
+     div.classList.add("option-container");
+     const inputType = question.type;
+     const input = document.createElement("input");
+     input.type = inputType;
+     input.name = `question-${index}`;
+     input.value = option;
+
+     const label = document.createElement("label");
+     label.textContent = option;
+
+     // Preselect answers if already chosen
+     if (userAnswers[index]?.includes(option)) {
+         input.checked = true;
+     }
+    
+     div.appendChild(input);
+     div.appendChild(label);
+    
+     optionsContainer.appendChild(div);
+
+     // Save the selected option
+     input.addEventListener("change", () => {
+         if (inputType === "radio") {
+             userAnswers[index] = [input.value];
+         } else if (inputType === "checkbox") {
+             if (input.checked) {
+                 userAnswers[index] = userAnswers[index] || [];
+                 userAnswers[index].push(input.value);
+             } else {
+                 userAnswers[index] = userAnswers[index].filter(ans => ans !== input.value);
+             }
+         }
+     });
+ });
+
+ //questionContainer.appendChild(optionsContainer);
+ toggleNavigationButtons(index);
+ updateQuestionCount(); //update the question counter.
+}
 // Function to update the question count
 function updateQuestionCount() {
   questionCountElement.textContent = `${currentQuestionIndex + 1} of ${questions.length} Questions`;
 }
 
-// Timer function
-function startTimer(duration) {
-  let timeLeft = duration;
-  timerElement.textContent = `${timeLeft}s`;
-
-  timerInterval = setInterval(() => {
-    timeLeft--;
-    timerElement.textContent = `${timeLeft}s`;
-
-    if (timeLeft <= 0) {
-      clearInterval(timerInterval); // Stop the timer.
-      moveToNextQuestion(); // Automatically move to the next question.
-    }
-  }, 1000);
+function toggleNavigationButtons(index) {
+ document.getElementById("prev-btn").style.display = index > 0 ? "inline-block" : "none";
+ document.getElementById("next-btn").style.display = index < questions.length - 1 ? "inline-block" : "none";
+ document.getElementById("submit-btn").style.display = index === questions.length - 1 ? "inline-block" : "none";
 }
 
-// Function to stop the timer (useful when moving to the next question manually)
-function stopTimer() {
-  clearInterval(timerInterval);
+function saveAnswer(index) {
+ const inputs = document.querySelectorAll(`[name="question-${index}"]`);
+ const selected = Array.from(inputs)
+     .filter(input => input.checked)
+     .map(input => input.value);
+
+ userAnswers[index] = selected.length > 0 ? selected : null;
 }
 
-function checkAnswer(selectedOption, correctAnswer) {
-  // Determine if the selected answer is correct
-  console.log("selected option:", selectedOption);
-  console.log("correct answer:", correctAnswer);
-  let isCorrect;
-  if (Array.isArray(correctAnswer)) {
-    isCorrect = correctAnswer.includes(selectedOption); // true or false
+function calculateResults() {
+ let score = 0;
+ const incorrectAnswers = [];
+
+ questions.forEach((question, index) => {
+     const correct = question.correctAnswers;
+     const userSelected = userAnswers[index] || [];
+     const isCorrect =
+         question.type === "radio"
+             ? correct.includes(userSelected[0])
+             : correct.every(ans => userSelected.includes(ans)) &&
+               userSelected.every(ans => correct.includes(ans));
+
+     if (isCorrect) {
+         score++;
+     } else {
+         incorrectAnswers.push({
+             question: question.question,
+             userSelected,
+             correctAnswers: correct
+         });
+     }
+ });
+
+ displayResults(score, incorrectAnswers);
+}
+
+function displayResults(score, incorrectAnswers) {
+ const resultContainer = document.getElementById("result-container");
+ const percentage = (score / questions.length)*100;
+ let resultText = "";
+ let resultClass = "";
+
+   // Determine performance level
+   if (percentage < 50) {
+      resultText = "🚨 Speed bump! Better luck next time on your driving adventure.";
+      resultClass = "red";
+  } else if (percentage >= 50 && percentage <= 75) {
+      resultText = "⛽ Fuel pump: Halfway there! Refuel your knowledge and take another lap!";
+      resultClass = "orange";
   } else {
-    isCorrect = selectedOption === correctAnswer; // true or false
+      resultText = "🎉 Honk honk! Celebration ahead—you have nailed it! driving champion!";
+      resultClass = "green";
   }
+  // Display the score with performance level
+ resultContainer.innerHTML = `<h2 class="${resultClass}">Your Score: ${score}/${questions.length} (${percentage}%)</h2>
+ <p class="${resultClass}">${resultText}</p>
+ `;
 
-  // Increment score and provide feedback
-  if (isCorrect) {
-    score++; // Increment the score for correct answers
-   
-  } 
+ //List incorrect answers
+ if (incorrectAnswers.length) {
+  
+     const incorrectList = document.createElement("ul");
+     incorrectAnswers.forEach(({ question, userSelected, correctAnswers }) => {
+         const listItem = document.createElement("li");
+         listItem.innerHTML = `
+             <strong>${question}</strong><br>
+             Your Answer: ${userSelected.join(", ") || "None"}<br>
+             Correct Answer: ${correctAnswers.join(", ")}
+         `;
+         incorrectList.appendChild(listItem);
+     });
+     resultContainer.appendChild(incorrectList);
+ }
+
+ const restartButton = document.createElement("button");
+ restartButton.classList.add("startOver");
+ restartButton.textContent = "Start Over";
+ restartButton.addEventListener("click", resetQuiz);
+ resultContainer.appendChild(restartButton);
+
+ resultContainer.style.display = "block";
+ document.getElementById("quiz-container").style.display = "none";
 }
 
+function resetQuiz() {
+ currentQuestionIndex = 0;
+ userAnswers.fill(null);
+ document.getElementById("result-container").style.display = "none";
+ //document.getElementById("quiz-container").style.display = "block";
+  document.querySelector('.quote').style.display = "block";
+document.querySelector('.start-button').style.display = "block";
+ //displayQuestion(currentQuestionIndex);
+}
 
-    // function to move to the next question
-    function moveToNextQuestion(){
-      stopTimer(); // stop the timer for the current question
-
-      if(currentQuestionIndex < questions.length - 2){
-      currentQuestionIndex++; // move to the next question
-    
-      displayQuestion(currentQuestionIndex); // show the next question
-      startTimer(20); // restart the timer for the new question
-    } else if (currentQuestionIndex === questions.length - 2) {
-      // for the secondlast question
-      currentQuestionIndex++; // move to the last question
-      displayQuestion(currentQuestionIndex); // show the last question
-      startTimer(20); // restart the timer for the last question
-      
-      nextButton.style.display = "none";// hide the next button
-      submitButton.style.display = "inline-block"; // show the submit button
-      
-     // questionElement.textContent="Congratulations! You have finished the quiz.";
-      // optionsElement.innerHTML=" "; // clear options
-      
-      // timerElement.textContent=""; // clear the timer
-    }
-  }
-  //Event listener for the NEXT button
-nextButton.addEventListener("click", () => {
-  moveToNextQuestion();
+// Event Listeners
+document.getElementById("prev-btn").addEventListener("click", () => {
+ saveAnswer(currentQuestionIndex);
+ currentQuestionIndex--;
+ displayQuestion(currentQuestionIndex);
 });
-  
-  //Event listerner for the SUBMIT button
-  submitButton.addEventListener("click", () => {
-    stopTimer(); // stop the timer
-    showQuizSummary(); //show the quiz summary
-  });
 
-  // function will calculate the users score and display completion msg
-  function showQuizSummary(){
-    // calculate the total score (all calculations done in checkAnswer function)
-    quizContainer.innerHTML = `
-    <div class ="quiz-summary">
-      <h2> Quiz Completed! </h2>
-      <p> Your Score: ${score} out of ${questions.length}</p>
-      </div>
-      `;
-  }
+document.getElementById("next-btn").addEventListener("click", () => {
+ saveAnswer(currentQuestionIndex);
+ currentQuestionIndex++;
+ displayQuestion(currentQuestionIndex);
+});
+
+document.getElementById("submit-btn").addEventListener("click", () => {
+ saveAnswer(currentQuestionIndex);
+ calculateResults();
+});
+
+// Start the Quiz
+displayQuestion(currentQuestionIndex);
+
 
 
 

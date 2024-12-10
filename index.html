@@ -15,27 +15,25 @@
     </div>
       <button class="start-button">Rev the Engine!</button>
       <!-- This is the main container for the quiz -->
-<div class="quiz-container">
+<div id="quiz-container">
 
   <div class="quiz-header">
     <div class="question-count">1 of 10 Questions</div>
-    <div class="timer">
-      <img src="timer-icon.svg" />
-          <span class="time-left">20s</span></div>
+    
   </div>
   <div class="quiz-content">
     <div class="question"></div>
     <div class="options"></div>
   </div>
   <div class="quiz-footer">
-    <button class="next-btn">Next</button>
-    <button class="submit-btn">Submit</button>
+    <button id="prev-btn">Previous</button>
+    <button id="next-btn">Next</button>
+    <button id="submit-btn" style="display: none;">Submit</button>
   </div>
 </div>
-
-
-      
-
-  <script src="quiz.js"></script>
+<div id="result-container" style="display: none;"></div>
+       <script src="quiz.js"></script>
 </body>
+
+    
 </html>

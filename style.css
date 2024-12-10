@@ -1,185 +1,259 @@
 body {
-    margin: 0;
-    font-family: 'Poppins', sans-serif;
-    background: url('images/road-2650211_1280.jpg') center/cover no-repeat;
-    color: #fff;
-    text-align: center;
-    height: 90vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: start;
-    align-items: center;
-    overflow: hidden;
-    
-  }
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  background: url('images/road-2650211_1280.jpg') center/cover no-repeat;
+  color: #fff;
+  text-align: center;
+  height: 90vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: center;
+  overflow: hidden;
   
-  .quote {
-    margin-top: 70px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 2rem;
-    margin-bottom: 2rem;
-    
-    padding: 1rem 1.5rem;
-    border-radius: 8px;
-    background: rgba(0, 0, 0, 0.5);
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.4), /*  shadow */
-    inset 0px -1px 3px rgba(255, 255, 255, 0.2); /* Inner shadow for embossed effect */
-    color: #fff;                   /* White text for contrast */
-    text-align: center;            /* Center align text */
-  }
-  
+}
 
-  .start-button {
-    display: inline-block;
-    margin-top: 35px;
-    padding: 1.5rem 3rem;
-    background-color: #ffcc00;
-    color: #333;
-    font-size: 1.5rem;
-    font-weight: bold;
-    border: none;
-    border-radius: 10px;
-    cursor: pointer;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
-    text-transform: uppercase;
-    transition: transform 0.3s, background-color 0.3s;
-    cursor: auto;
-  }
-  .start-button:hover {
-    
-    background-color: #ffc107;
-    transform: scale(1.1);
-  }
-  .icon {
-    width: 70px;
-   
-  }
+.quote {
+  margin-top: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  margin-bottom: 2rem;
+  
+  padding: 1rem 1.5rem;
+  border-radius: 8px;
+  background: rgba(0, 0, 0, 0.5);
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.4), /*  shadow */
+  inset 0px -1px 3px rgba(255, 255, 255, 0.2); /* Inner shadow for embossed effect */
+  color: #fff;                  
+  text-align: center;            
+}
+
+
+.start-button {
+  display: inline-block;
+  margin-top: 35px;
+  padding: 1.5rem 3rem;
+  background-color: #ffcc00;
+  color: #333;
+  font-size: 1.5rem;
+  font-weight: bold;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+  text-transform: uppercase;
+  transition: transform 0.3s, background-color 0.3s;
+  cursor: auto;
+}
+.start-button:hover {
+  
+  background-color: #ffc107;
+  transform: scale(1.1);
+}
+.icon {
+  width: 70px;
+ 
+}
 /* General container styling */
-.quiz-container {
+#quiz-container {
+
+  width: 50%;
+  height: 50%;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: rgba(0, 0, 0, 0.6); /* Semi-transparent black */
+  color: white;
+  border-radius: 15px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); /* 3D effect */
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   
-    width: 50%;
-    height: 50%;
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background-color: rgba(0, 0, 0, 0.6); /* Semi-transparent black */
-    color: white;
-    border-radius: 15px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); /* 3D effect */
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    
-  }
-  
-  /* Header styling */
-  .quiz-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-size: 1.2rem;
-    margin-bottom: 10px;
-  }
-  
-  .question-count {
-    font-weight: bold;
-  }
-  .timer {
-    background-color: #e1f5fe;
-    width: 6.5em;
-    border-radius: 1.8em;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0.5em 1.2em;
-    color: #ee1010; /* Red color for the timer */
-  }
-  
-  
-  /* Content styling */
-  .quiz-content {
-    flex-grow: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-  }
-  
-  .question {
-    font-size: 1.5rem;
-    margin-bottom: 20px;
-  }
-  
-  .options {
-    display: grid;
-    grid-template-columns: 1fr 1fr; /* Two options per row */
-    gap: 10px;
-    width: 100%;
-  }
-  
-  .option {
-    background-color: #007bff; /* Blue background */
-    color: white;
-    border: none;
-    padding: 10px;
-    border-radius: 5px;
-    font-size: 1rem;
-    cursor: pointer;
-    transition: background-color 0.3s;
-  }
-  
-  .option:hover {
-    background-color: #074794; /* Darker blue on hover */
-  }
-  
-  .option.selected {
-    background-color: #c2eb0a;
-    color: #ee0f0f;
-    font-size: 1.2rem;
-    padding:12px ;
-    transition: background-color 0.3s;
-  }
+}
+
+/* Header styling */
+.quiz-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 1.2rem;
+  margin-bottom: 10px;
+}
+
+.question-count {
+  font-weight: bold;
+}
+
+
+
+/* Content styling */
+.quiz-content {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.question {
+  font-size: 1.5rem;
+  margin-bottom: 50px;
+}
+
+.options {
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* Two options per row */
+  gap: 10px;
+  width: 100%;
+}
+
   .option-container {
-    display: flex;
-    align-items: center;
-    background-color: #007bff; /* Blue background */
-    color: white;
-    border: none;
-    padding: 10px;
-    border-radius: 5px;
-    font-size: 1rem;
-    
-    margin-bottom: 10px;
-    transition: background-color 0.3s, border-color 0.3s;
-  }
-  .option-container.selected{
-    background-color: #c2eb0a;
-    color: #ee0f0f;
-    font-size: 1.2rem;
-    padding:12px ;
-    transition: background-color 0.3s;
-  }
-  /* Footer styling */
-  .quiz-footer {
-    text-align: center;
-  }
+  display: flex;
+  align-items: center;
   
-  .next-btn {
-    background-color: #28a745; /* Green background */
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 5px;
-    font-size: 1rem;
-    cursor: pointer;
-    transition: background-color 0.3s;
-  }
+  background-color: #007bff; 
+  color: white;
+  border: none;
+  padding: 10px;
+  border-radius: 5px;
+  font-size: 1.05rem;
   
-  .next-btn:hover {
-    background-color: #1e7e34; /* Darker green on hover */
-  }
+  margin-bottom: 15px;
+  transition: background-color 0.3s, border-color 0.3s;
+}
+
+/* Footer styling */
+.quiz-footer {
+  text-align: center;
+}
+
+#next-btn, #prev-btn, #submit-btn {
+  background-color: #92cc0a; 
+  color: white;
+  font-weight: bolder;
+  border: none;
+  width: 102px;
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+#next-btn:hover, #prev-btn:hover, #submit-btn:hover {
+  background-color: #317e1e; 
+}
+
+  input[type="radio"] {
+  appearance: none; /* Remove default styles */
+  width: 24px;
+  height: 24px;
+  border: 2px solid #000; /* Circle border */
+  border-radius: 50%; /* Make it a circle */
+  outline: none;
+  cursor: pointer;
+  position: relative;
+}
+
+input[type="radio"]:checked {
+  background-color: #000; /* Color of the selected circle */
+}
+
+input[type="radio"]:checked::before {
+  content: "";
+  width: 12px; /* Inner circle size */
+  height: 12px;
+  background-color: #fff; /* Inner circle color */
+  border-radius: 50%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+input[type="checkbox"] {
+  appearance: none; /* Remove default styles */
+  width: 24px;
+  height: 24px;
+  border: 2px solid #000; /* Border color */
+  border-radius: 4px; /* Slightly rounded corners */
+  outline: none;
+  cursor: pointer;
+  position: relative;
+}
+
+input[type="checkbox"]:checked {
+  background-color: #000; /* Background color when checked */
+}
+
+input[type="checkbox"]:checked::before {
+  content: "";
+  width: 10px; /* Size of the checkmark */
+  height: 10px;
+  border: 2px solid #fff; /* Checkmark color */
+  border-width: 0 2px 2px 0; /* Adjust to make a tick */
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(45deg); /* Center and rotate to create a checkmark */
+}
+.red {
+  color: red;
+  font-weight: bold;
+}
+
+.orange {
+  color: orange;
+  font-weight: bold;
+}
+
+.green {
+  color: green;
+  font-weight: bold;
+}
+
+#result-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between; /* Keeps the button visible at the bottom */
+  max-height: 80vh; /* Prevents the container from exceeding viewport height */
+  overflow-y: auto; /* Adds scrolling for content that overflows */
+  padding: 20px;
+  margin: 10px;
+  background-color: #f9f9f9;
+  color: #000;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+#result-container ul {
+  list-style-type: disc;
+  margin: 10px 0;
+  padding-left: 20px; 
+  text-align: left; 
+}
+#result-container li {
+margin-bottom: 10px;
+}
+
+#result-container button {
+  margin-top: 20px;
+  padding: 10px 20px;
+  background-color: #007bff; 
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+#result-container button:hover {
+  background-color: #0056b3; 
+}
+
