@@ -3,9 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Nackademin Quiz</title>
+  <title>Ankademin Quiz</title>
   <link rel="stylesheet" href="style.css">
-   
   
 </head>
 <body>
@@ -15,11 +14,12 @@
     </div>
       <button class="start-button">Rev the Engine!</button>
       <!-- This is the main container for the quiz -->
+       
 <div id="quiz-container">
 
   <div class="quiz-header">
     <div class="question-count">1 of 10 Questions</div>
-    
+    <div><button type="button" id="toggle-theme">Switch to Dark Mode</button></div>
   </div>
   <div class="quiz-content">
     <div class="question"></div>
@@ -28,7 +28,7 @@
   <div class="quiz-footer">
     <button id="prev-btn">Previous</button>
     <button id="next-btn">Next</button>
-    <button id="submit-btn" style="display: none;">Submit</button>
+    <button id="submit-btn">Submit</button>
   </div>
 </div>
 <div id="result-container" style="display: none;"></div>

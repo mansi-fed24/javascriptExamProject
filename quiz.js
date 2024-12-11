@@ -94,35 +94,45 @@ const questions = [
   
 ];
 
-// Select the elements
-const quoteElement = document.querySelector('.quote');
-const startButton = document.querySelector('.start-button');
-const quizContainer = document.querySelector('#quiz-container');
-const questionContainer = document.querySelector('.question');
-const optionsContainer = document.querySelector('.options');
-const questionCountElement = document.querySelector('.question-count');
+// Select the HTML elements
+const quoteElement = document.querySelector(".quote");
+const startButton = document.querySelector(".start-button");
+const quizContainer = document.querySelector("#quiz-container");
+const questionContainer = document.querySelector(".question");
+const optionsContainer = document.querySelector(".options");
+const questionCountElement = document.querySelector(".question-count");
+const resultContainer = document.querySelector("#result-container");
 
-const nextButton = document.querySelector('#next-btn');
-const submitButton = document.querySelector('#submit-btn');
+const nextButton = document.querySelector("#next-btn");
+const submitButton = document.querySelector("#submit-btn");
+const prevButton = document.querySelector("#prev-btn");
+
+const toggleThemeButton = document.querySelector("#quiz-container #toggle-theme");
+
+  toggleThemeButton.addEventListener("click", () => {
+    // toggle the dark-mode class on both the containers
+        quizContainer.classList.toggle("dark-mode");
+        resultContainer.classList.toggle("dark-mode");
+   
+
+const isDarkMode = quizContainer.classList.contains("dark-mode");
+toggleThemeButton.textContent = isDarkMode ? "Switch to Light Mode" : "Switch to Dark Mode" ;
+
+});
 
 
 let currentQuestionIndex = 0;
-const userAnswers = Array(questions.length).fill(null);
+const userAnswers = Array(questions.length).fill(null); 
+// this will create an array with the same length as no. of questions , fill with null
+// userAnswers = [null, null, null.......null] when user answer it will come in place of null
 
-//hide submit button initially
-submitButton.style.display = "none";
 
-//hide quiz container initially
-quizContainer.style.display = "none";
-
-// Add an event listener to the "Rev the Engine!" button
-startButton.addEventListener('click', () => {
-// Hide the quote and start button
-quoteElement.style.display = 'none';
-startButton.style.display = 'none';
-
-// Show the quiz container
-quizContainer.style.display = 'flex';
+// Add event listener to the-Rev the Engine button
+startButton.addEventListener("click", () => {
+// Hide both the quote div and start button and show question container
+quoteElement.style.display = "none";
+startButton.style.display = "none";
+quizContainer.style.display = "flex"; // initially in css its display: none
 
 // start quiz - Display the first question when the page loads
 displayQuestion(currentQuestionIndex);
@@ -130,19 +140,20 @@ displayQuestion(currentQuestionIndex);
 });
 
 function displayQuestion(index) {
-  //const questionContainer = document.getElementById("question-container");
-  const question = questions[index];
+  const question = questions[index]; 
+  // the whole first object inside the questions array will come in question variable
+  //console.log(question);
+  // now from question variable which is containing the whole first object will take only the question and put in question container to display on screen dynamically
   questionContainer.textContent = question.question; // Set question text
 
   // Clear existing options
-  optionsContainer.innerHTML = '';
+  optionsContainer.innerHTML = " ";
   
- 
-
- //const optionsContainer = document.querySelector('.options');
- question.options.forEach((option, i) => {
+ // now time to display options on screen dynamically
+ // as option is not one so we want to run a loop (forEach)
+  question.options.forEach(option => {
   const div = document.createElement("div");
-     div.classList.add("option-container");
+     div.classList.add("option-container");// needed the classname for this div to put style in css
      const inputType = question.type;
      const input = document.createElement("input");
      input.type = inputType;
@@ -151,18 +162,23 @@ function displayQuestion(index) {
 
      const label = document.createElement("label");
      label.textContent = option;
+     //console.log("Input Element:", input);
+     //console.log("Label Element:", label);
 
      // Preselect answers if already chosen
+     // Check if the current option has been selected by the user
      if (userAnswers[index]?.includes(option)) {
          input.checked = true;
      }
-    
+    // now will append all elements which we created dynamically to display options 
+    // created a optionsContainer(with div class option) in html . 
+    // inside that optionsContainer created a div dynamically in js(with class option-container )
+    //and  dynamically created input-element and label-element to store in it . 
      div.appendChild(input);
      div.appendChild(label);
-    
      optionsContainer.appendChild(div);
 
-     // Save the selected option
+     // Save the selected option in userAnswers
      input.addEventListener("change", () => {
          if (inputType === "radio") {
              userAnswers[index] = [input.value];
@@ -187,28 +203,28 @@ function updateQuestionCount() {
 }
 
 function toggleNavigationButtons(index) {
- document.getElementById("prev-btn").style.display = index > 0 ? "inline-block" : "none";
- document.getElementById("next-btn").style.display = index < questions.length - 1 ? "inline-block" : "none";
- document.getElementById("submit-btn").style.display = index === questions.length - 1 ? "inline-block" : "none";
+ prevButton.style.display = index > 0 ? "inline-block" : "none";
+ nextButton.style.display = index < questions.length - 1 ? "inline-block" : "none";
+ submitButton.style.display = index === questions.length - 1 ? "inline-block" : "none";
 }
 
 function saveAnswer(index) {
  const inputs = document.querySelectorAll(`[name="question-${index}"]`);
  const selected = Array.from(inputs)
-     .filter(input => input.checked)
-     .map(input => input.value);
-
+     .filter(input => input.checked) // filters the input that are selected
+     .map(input => input.value);  // map takes out value from that filtered inputs
+// 
  userAnswers[index] = selected.length > 0 ? selected : null;
 }
 
 function calculateResults() {
  let score = 0;
- const incorrectAnswers = [];
+ const incorrectAnswers = []; // an array to store details of any ques user answered incorrect
 
  questions.forEach((question, index) => {
-     const correct = question.correctAnswers;
+     const correct = question.correctAnswers; // array of correct answers for the question
      const userSelected = userAnswers[index] || [];
-     const isCorrect =
+     const isCorrect = // finds whether the user answered the question correctly
          question.type === "radio"
              ? correct.includes(userSelected[0])
              : correct.every(ans => userSelected.includes(ans)) &&
@@ -229,7 +245,7 @@ function calculateResults() {
 }
 
 function displayResults(score, incorrectAnswers) {
- const resultContainer = document.getElementById("result-container");
+ 
  const percentage = (score / questions.length)*100;
  let resultText = "";
  let resultClass = "";
@@ -273,33 +289,32 @@ function displayResults(score, incorrectAnswers) {
  resultContainer.appendChild(restartButton);
 
  resultContainer.style.display = "block";
- document.getElementById("quiz-container").style.display = "none";
+ quizContainer.style.display = "none";
 }
 
 function resetQuiz() {
  currentQuestionIndex = 0;
  userAnswers.fill(null);
- document.getElementById("result-container").style.display = "none";
- //document.getElementById("quiz-container").style.display = "block";
-  document.querySelector('.quote').style.display = "block";
-document.querySelector('.start-button').style.display = "block";
- //displayQuestion(currentQuestionIndex);
+ resultContainer.style.display = "none";
+ quoteElement.style.display = "flex";
+ startButton.style.display = "block";
+ 
 }
 
 // Event Listeners
-document.getElementById("prev-btn").addEventListener("click", () => {
+prevButton.addEventListener("click", () => {
  saveAnswer(currentQuestionIndex);
  currentQuestionIndex--;
  displayQuestion(currentQuestionIndex);
 });
 
-document.getElementById("next-btn").addEventListener("click", () => {
+nextButton.addEventListener("click", () => {
  saveAnswer(currentQuestionIndex);
  currentQuestionIndex++;
  displayQuestion(currentQuestionIndex);
 });
 
-document.getElementById("submit-btn").addEventListener("click", () => {
+submitButton.addEventListener("click", () => {
  saveAnswer(currentQuestionIndex);
  calculateResults();
 });
